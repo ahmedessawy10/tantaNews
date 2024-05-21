@@ -11,7 +11,7 @@
 	<div class="left-content">
 		<div>
 			<h2 class="main-content-title tx-24 mg-b-1 mg-b-lg-1">Hi, welcome back!</h2>
-			<p class="mg-b-0">Sales monitoring dashboard template.</p>
+			<p class="mg-b-0">{{__('dashboard.setting')}}.</p>
 		</div>
 	</div>
 	<div class="main-dashboard-header-right">

@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\dashboard\SettingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,13 +21,15 @@ Route::get('/', function () {
 });
 
 Route::prefix('/dashboard')->name('dashboard.')->group(function (){
-    Route::get("/settings",function(){
-     return view("adminDashboard.setting");
-    })->name('setting');
-
+    // setting 
+    Route::resource('setting',SettingController::class);
+    
 
 });
 
+Route::get('/{page}',function($page){
+return view('adminDashboard.'.$page);
+});
 
 
 Route::get('/dashboard', function () {
