@@ -16,6 +16,7 @@
 	</div>
 	<div class="main-dashboard-header-right">
 		<div>
+			{{time()}}
 			<label class="tx-13">Customer Ratings</label>
 			<div class="main-star">
 				<i class="typcn typcn-star active"></i> <i class="typcn typcn-star active"></i> <i

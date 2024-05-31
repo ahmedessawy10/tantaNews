@@ -16,14 +16,29 @@
 
 <!-- /breadcrumb -->
 <div class="bg-white  w-full fluid-container m-0">
+    @if ($errors->any())
+    <ul>
+
+
+        @foreach ($errors->all() as $error )
+        <li>{{$error}}</li>
+        @endforeach
+    </ul>
+    @endif
     <form class="px-3 py-2" action="{{route("dashboard.setting.store")}}" method="post" enctype="multipart/form-data">
         @csrf
         <div class="grid sm:grid-cols-2 grid-cols-1 gap-2">
             <div class=" flex flex-col align-center justify-start">
+
+                <img src="{{ asset(substr($setting->logo,strpos($setting->logo,"public")+7)) }}" id="logo-img"
+                    class="w-[100px] h-[100px] pb-3">
+
                 <label for="from-logo" class="font-bold text-md">{{__('dashboard.logo')}}</label>
                 <input type="file" name="logo" id="from-logo">
             </div>
             <div class=" flex flex-col align-center justify-start">
+                <img src="{{ asset(substr($setting->favicon,strpos($setting->favicon,"public")+7)) }}"
+                    class="w-[100px] h-[100px] pb-3">
                 <label for="favlogo" class="font-bold text-md">{{__('dashboard.favlogo')}}</label>
                 <input type="file" name="favicon" id="favlogo">
             </div>
@@ -51,7 +66,9 @@
             </div>
         </div>
 
-        <div class="panel panel-primary tabs-style-3 my-3 px-3">
+
+
+        <div class="panel panel-primary tabs-style-3 mt-9 px-3">
             <div class="tab-menu-heading">
                 <div class="tabs-menu ">
                     <!-- Tabs -->
@@ -121,4 +138,19 @@
 
 @section('js')
 
+
+<script>
+    $(document).ready(function(){
+    $('#from-logo').change(function() {
+        var file = this.files[0];
+        if (file) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $('#logo-img').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+});
+</script>
 @endsection

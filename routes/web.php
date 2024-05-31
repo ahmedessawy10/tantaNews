@@ -16,13 +16,16 @@ use App\Http\Controllers\dashboard\SettingController;
 */
 
 Route::get('/', function () {
-    // return view('welcome');
-    return view('adminDashboard.index');
+    return view('welcome');
+    // return view('adminDashboard.index');
 });
 
-Route::prefix('/dashboard')->name('dashboard.')->group(function (){
+Route::prefix('/dashboard')->name('dashboard.')->middleware(['auth',"role:admin"])->group(function (){
     // setting 
     Route::resource('setting',SettingController::class);
+    Route::get("index",function (){
+       return view("adminDashboard.index") ;
+    });
     
 
 });
