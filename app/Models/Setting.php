@@ -21,4 +21,22 @@ class Setting extends Model implements TranslatableContract
     'linkedin_url',
     'email',
     'phone_number'];
+
+   static  function getSetting(){
+        if(Self::first()){
+            return Self::first();
+        }else{
+
+            $data=[
+                "id"=>'1',
+            ];
+            foreach(config("app.languages")as $key=>$value){
+           $data[$key]['title']=$value;
+           $data[$key]['content']=$value;
+           $data[$key]['address']=$value;
+            }
+            return Self::create($data);
+
+        }
+    }
 }

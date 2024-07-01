@@ -14,37 +14,71 @@
 
 </div>
 
+
+@endsection
+@section('content')
+
+
+@if ($errors->any())
+<ul>
+
+    @foreach ($errors->all() as $error)
+    <li>
+        {{ $error }}
+    </li>
+    @endforeach
+</ul>
+@else
+
+@endif
+
+@if(Session::has('sucess'))
+
+
+<div class="alert alert-sucess ">
+    {{Session::get('sucess')}}
+</div>
+@endif
+
 <!-- /breadcrumb -->
 <div class="bg-white  w-full fluid-container m-0">
-    <form class="px-3 py-2" action="{{route("dashboard.setting.store")}}" method="post" enctype="multipart/form-data">
+    <form class="px-3 py-2" action="{{route("admin.setting.store")}}" method="post" enctype="multipart/form-data">
         @csrf
         <div class="grid sm:grid-cols-2 grid-cols-1 gap-2">
             <div class=" flex flex-col align-center justify-start">
                 <label for="from-logo" class="font-bold text-md">{{__('dashboard.logo')}}</label>
                 <input type="file" name="logo" id="from-logo">
+                <img src="{{ asset(preg_replace('/\\\\/', '/', substr($setting->favicon, strpos($setting->favicon, 'img/')))) }}"
+                    class="w-10 h-10 mt-2">
             </div>
             <div class=" flex flex-col align-center justify-start">
                 <label for="favlogo" class="font-bold text-md">{{__('dashboard.favlogo')}}</label>
                 <input type="file" name="favicon" id="favlogo">
+                <img src="{{ asset(preg_replace('/\\\\/', '/', substr($setting->favicon, strpos($setting->favicon, 'img/')))) }}"
+                    class="w-10 h-10 mt-2">
+
             </div>
 
 
 
             <div class="flex flex-col align-center justify-start">
                 <label for="instagram" class="font-bold text-md">{{__('dashboard.instagram')}}</label>
-                <input type="text" class="border rounded-lg" name="linkedin_url" id="instagram">
+                <input type="text" class="border rounded-lg" value="{{$setting->linkedin_url}}" name="linkedin_url"
+                    id="instagram">
             </div>
             <div class="flex flex-col align-center justify-start">
                 <label for="facebook" class="font-bold text-md">{{__('dashboard.facebook')}}</label>
-                <input type="text" class="border rounded-lg" name="facebook_url" id="facebook">
+                <input type="text" class="border rounded-lg" value="{{$setting->facebook_url}}" name="facebook_url"
+                    id="facebook">
             </div>
             <div class="flex flex-col align-center justify-start">
                 <label for="email" class="font-bold text-md">{{__('dashboard.email')}}</label>
-                <input type="text" class="border rounded-lg" name="email" id="email">
+                <input type="text" class="border rounded-lg" value="{{$setting->email}}" name="email" id="email">
             </div>
             <div class="flex flex-col align-center justify-start">
                 <label for="phone" class="font-bold text-md">{{__('dashboard.phone')}}</label>
-                <input type="text" class="border rounded-lg" name="phone_number" id="phone">
+                <input type="text" class="border rounded-lg" value="{{$setting->phone_number}}" name="phone_number"
+                    id="phone">
             </div>
         </div>
 
@@ -72,19 +106,21 @@
                             <div class="flex flex-col align-center justify-start">
                                 <label for="title{{$key}}" class="font-bold text-md">{{__('dashboard.title')}}
                                     {{$value}}</label>
-                                <input type="text" class="border rounded-lg" name="{{$key}}[title]" id="title{{$key}}">
+                                <input type="text" class="border rounded-lg"
+                                    value="{{$setting->translate($key)->title}}" name="{{$key}}[title]"
+                                    id="title{{$key}}">
                             </div>
                             <div class="flex flex-col align-center justify-start">
                                 <label for="address{{$key}}" class="font-bold text-md">{{__('dashboard.address')}}
                                     {{$value}}</label>
                                 <input type="text" class="border rounded-lg" name="{{$key}}[address]"
-                                    id="address{{$key}}">
+                                    id="address{{$key}}" value="{{$setting->translate($key)->address}}">
                             </div>
                             <div class=" flex flex-col align-center justify-start">
                                 <label for="content{{$key}}" class="font-bold text-md">{{__('dashboard.content')}}
                                     {{$value}}</label>
                                 <textarea type="text" rows="6" class="border rounded-lg" name="{{$key}}[content]"
-                                    id="content{{$key}}"></textarea>
+                                    id="content{{$key}}">{{$setting->translate($key)->content}}</textarea>
                             </div>
 
                         </div>
@@ -104,11 +140,6 @@
 
     </form>
 </div>
-@endsection
-@section('content')
-
-
-
 
 
 

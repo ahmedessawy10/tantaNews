@@ -16,20 +16,16 @@ use App\Http\Controllers\dashboard\SettingController;
 */
 
 Route::get('/', function () {
-    // return view('welcome');
-    return view('adminDashboard.index');
+    return view('welcome');
+    // return view('adminDashboard.index');
 });
 
-Route::prefix('/dashboard')->name('dashboard.')->group(function (){
-    // setting 
-    Route::resource('setting',SettingController::class);
-    
 
-});
 
-Route::get('/{page}',function($page){
-return view('adminDashboard.'.$page);
-});
+// Route::get('/{page}',function($page){
+// return view('adminDashboard.'.$page);
+// });
+require __DIR__.'/admin.php';
 
 
 Route::get('/dashboard', function () {

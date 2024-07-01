@@ -5,6 +5,8 @@ namespace App\Http\Controllers\dashboard;
 use App\Models\Setting;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\Admin\SettingRequest;
 
 class SettingController extends Controller
 {
@@ -28,9 +30,30 @@ class SettingController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(SettingRequest $request )
     {
-        Setting::create($request->all());
+
+        $setting = Setting::first();
+        $setting->update($request->except(['logo','favicon']));
+       
+        // update logo
+        if($request->hasFile('logo')){
+
+       $file_extension=$request->file('logo')->getClientOriginalExtension();
+       $logo=time().".".$file_extension;
+       $path=$request->file('logo')->move(public_path('img/setting'),$logo);
+       $setting->update(['logo'=>$path]);
+
+        }
+
+
+        if($request->has('favicon')){
+            $file_extension=$request->file('favicon')->getClientOriginalExtension();
+            $favicon=time().".".$file_extension;
+           $path= $request->file('favicon')->move(public_path('img/setting'),$favicon);
+            $setting->update(['favicon'=>$path]);
+        }
+        return to_route('admin.setting.index')->with(['sucess'=>__('message.save_sucessfully')]);
     }
 
     /**
