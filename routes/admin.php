@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\dashboard\SettingController;
 
@@ -24,5 +25,6 @@ Route::middleware(["auth",'role:admin'])->prefix('admin')->name('admin.')->group
 Route::view('/dashboard','adminDashboard.index')->name('dashboard');
 
 Route::resource('setting',SettingController::class);
+Route::resource('users',UserController::class);
 
 });
